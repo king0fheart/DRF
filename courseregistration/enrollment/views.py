@@ -1,4 +1,5 @@
 import enrollment
+import json
 from enrollment.models import Enrollment
 from .serializers import EnrollmentSerializer
 from rest_framework.views import APIView
@@ -72,6 +73,18 @@ class EnrolledStudentApi (APIView):
             serializer = StudentSerializer(data)
             final_list.append(serializer.data)
         return Response(final_list)
+    
+    def post(self, request):
+        insert_data = {
+            'course': request.data[0]['course_id'],
+            'student': request.data[0]['student_id'],
+        }
+        serializers = EnrollmentSerializer(data = insert_data)
+        print(serializers)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.error_messages, status=status.HTTP_400_BAD_REQUEST)
 
 class EnrolledCourseApi (APIView):
     def get(self, request, std_id=None, format=None):
@@ -89,6 +102,17 @@ class EnrolledCourseApi (APIView):
             serializer = CourseSerializer(data)
             final_list.append(serializer.data)
         return Response(final_list)
+    def post(self, request):
+        insert_data = {
+            'course': request.data[0]['course_id'],
+            'student': request.data[0]['student_id'],
+        }
+        serializers = EnrollmentSerializer(data = insert_data)
+        print(serializers)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.error_messages, status=status.HTTP_400_BAD_REQUEST)
         
 # function based view
 
