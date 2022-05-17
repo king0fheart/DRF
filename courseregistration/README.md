@@ -1,4 +1,4 @@
-# Basic Sample Hardhat Project
+# Basic Sample DRF Project
 Student Course Enrollment using Django REST Framework
 
 GET, POST, PUT, DELETE Student
